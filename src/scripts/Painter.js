@@ -47,8 +47,11 @@ export class Painter {
  * @property {number} y
  * @property {number} size
  * @property {Painter} painter
+ * @property {boolean} isPaint
  */
 export class Cell {
+  isPaint = false
+
   constructor(x, y, size, painter) {
     this.x = x
     this.y = y
@@ -58,6 +61,13 @@ export class Cell {
 
   paint() {
     this.painter.context.fillRect(this.x, this.y, this.size, this.size)
+    this.isPaint = true
+  }
+
+  unpaint() {
+    this.painter.context.clearRect(this.x, this.y, this.size, this.size)
+    this.painter.context.strokeRect(this.x, this.y, this.size, this.size)
+    this.isPaint = false
   }
 
   getNeighbors() {
