@@ -88,4 +88,13 @@ export class Cell {
       return neighbors
     }, [])
   }
+
+  getPaintNeighbors() {
+    return this.getNeighbors().reduce((paintNeighbors, neighbor) => {
+      if (neighbor.isPaint) {
+        paintNeighbors.push(neighbor)
+      }
+      return paintNeighbors
+    }, [])
+  }
 }
