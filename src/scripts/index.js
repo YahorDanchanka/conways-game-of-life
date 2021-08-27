@@ -99,6 +99,19 @@ addControl('#interval-generation', {
   },
 })
 
+addControl('#generation-cells', {
+  events: {
+    onClick() {
+      painter.cells.forEach(cell => {
+        cell.unpaint()
+        if (Math.random() < 0.3) {
+          cell.paint()
+        }
+      })
+    },
+  },
+})
+
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', () => {
   const interval = localStorage.getItem('interval-generation') ?? 500
