@@ -47,6 +47,7 @@ function endGame() {
   if (paintCells <= 0) {
     window.generationCount = 0
     clearInterval(window.gameVendor)
+    startGameButton.removeAttribute('disabled')
     alert('Игра окончена')
   }
 }
@@ -140,6 +141,7 @@ startGameButton.addEventListener('click', () => {
     return paintCells
   }, 0)
   if (paintCells <= 0) return
+  startGameButton.setAttribute('disabled', 'disabled')
   const interval = localStorage.getItem('interval-generation') ?? 500
   window.gameVendor = setInterval(startGame, interval)
 })
