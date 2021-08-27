@@ -133,6 +133,13 @@ addControl('#clear-game', {
 
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', () => {
+  const paintCells = painter.cells.reduce((paintCells, cell) => {
+    if (cell.isPaint) {
+      paintCells++
+    }
+    return paintCells
+  }, 0)
+  if (paintCells <= 0) return
   const interval = localStorage.getItem('interval-generation') ?? 500
   window.gameVendor = setInterval(startGame, interval)
 })
