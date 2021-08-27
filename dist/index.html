@@ -1,0 +1,18 @@
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><title>Документ</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"><style>* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    ul {
+      list-style: none;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+    .sidebar .sidebar__item {
+      margin-bottom: 20px;
+    }
+    .sidebar .sidebar__item button {
+      margin-bottom: 5px;
+    }</style><script defer="defer" src="index.ce5d19f54acc59b04dbc.js"></script></head><body><div class="container-fluid"><div class="row"><div class="col"><h1>Клеточный автомат Джона Конвея</h1></div></div><div class="row"><div class="col-xl-8 col-lg-12"><canvas id="canvas" width="800" height="400"></canvas></div><ul class="sidebar col-xl-4 col-lg-12"><li class="sidebar__item"><h2>Размер ячейки</h2><input id="cell-size" type="number" class="form-control" value="50"></li><li class="sidebar__item"><h2>Интервал рождения нового поколения</h2><input id="interval-generation" type="number" class="form-control" value="500"></li><li class="sidebar__item"><h2>Игра</h2><button id="start-game" class="btn btn-primary">Запустить игру</button> <button id="stop-game" class="btn btn-primary">Пауза</button> <button id="clear-game" class="btn btn-primary">Очистить поле</button> <button id="generation-cells" class="btn btn-primary">Генерация рандомных клеток</button></li><li class="sidebar__item"><div class="alert alert-info">Текущее поколение: <span class="sidebar__item_generation-count">0</span></div></li></ul></div></div></body></html>
