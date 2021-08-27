@@ -24,7 +24,7 @@ export class Painter {
     for (let i = 0; i < horizontal; i++) {
       for (let j = 0; j < vertical; j++) {
         const [x, y] = [width * i, height * j]
-        this.cells.push(new Cell(x, y))
+        this.cells.push(new Cell(x, y, this))
         this.context.strokeRect(x, y, width, height)
       }
     }
@@ -39,10 +39,21 @@ export class Painter {
 /**
  * @property {number} x
  * @property {number} y
+ * @property {Painter} painter
+ *
+ * @property {boolean} isPaint
  */
 export class Cell {
-  constructor(x, y) {
+  isPaint = false
+
+  constructor(x, y, painter) {
     this.x = x
     this.y = y
+    this.painter = painter
+  }
+
+  paint() {
+    this.isPaint = true
+    this.painter.context.fillRect(this.x, this.y, this.painter.options.cell.width, this.painter.options.cell.height)
   }
 }
