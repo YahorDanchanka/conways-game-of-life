@@ -24,6 +24,14 @@ function startGame() {
     cells.push(nextCell)
   })
 
+  const isLoop = cells.every((cell, i) => {
+    return cell.isPaint === painter.cells[i].isPaint
+  })
+
+  if (isLoop) {
+    endGame('Игра окончена: бесконечный цикл')
+  }
+
   painter.cells = cells
   painter.cells.forEach(cell => {
     if (cell.isPaint) {
@@ -33,23 +41,22 @@ function startGame() {
     }
   })
 
-  endGame()
-}
-
-function endGame() {
   const paintCells = painter.cells.reduce((paintCells, cell) => {
     if (cell.isPaint) {
       paintCells++
     }
     return paintCells
   }, 0)
-
   if (paintCells <= 0) {
-    window.generationCount = 0
-    clearInterval(window.gameVendor)
-    startGameButton.removeAttribute('disabled')
-    alert('Игра окончена')
+    endGame()
   }
+}
+
+function endGame(message = 'Игра окончена') {
+  window.generationCount = 0
+  clearInterval(window.gameVendor)
+  startGameButton.removeAttribute('disabled')
+  alert(message)
 }
 
 function addControl(selector, options) {
@@ -117,6 +124,7 @@ addControl('#stop-game', {
   events: {
     onClick() {
       if (window.gameVendor) {
+        startGameButton.removeAttribute('disabled')
         clearInterval(window.gameVendor)
       }
     },
