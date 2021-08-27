@@ -56,4 +56,23 @@ export class Cell {
     this.isPaint = true
     this.painter.context.fillRect(this.x, this.y, this.painter.options.cell.width, this.painter.options.cell.height)
   }
+
+  getNeighbors() {
+    return this.painter.cells.reduce((neighbors, cell) => {
+      if (cell === this) {
+        return neighbors
+      }
+
+      if (
+        Math.round(cell.x - this.x) <= Math.round(this.painter.options.cell.width) &&
+        Math.round(cell.x - this.x) >= -Math.round(this.painter.options.cell.width) &&
+        Math.round(cell.y - this.y) <= Math.round(this.painter.options.cell.height) &&
+        Math.round(cell.y - this.y) >= -Math.round(this.painter.options.cell.height)
+      ) {
+        neighbors.push(cell)
+      }
+
+      return neighbors
+    }, [])
+  }
 }
