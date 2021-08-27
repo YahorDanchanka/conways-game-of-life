@@ -2,22 +2,30 @@
  * @property {HTMLCanvasElement} canvas
  * @property {CanvasRenderingContext2D} context
  *
- * @property {Cell[]} cells
+ * @property {Cell[]} cells Клетки
  */
 export class Painter {
   cells = []
+  options = {}
 
-  constructor(canvas) {
-    this.canvas = canvas
+  constructor(selector) {
+    this.canvas = document.querySelector(selector)
     this.context = this.canvas.getContext('2d')
   }
 
-  createGrid(size = 50) {
+  /**
+   * @param {number} horizontal Число клеток по горизонтали
+   * @param {number} vertical Число клеток по вертикали
+   */
+  createGrid(horizontal, vertical) {
     this.clearGrid()
-    for (let x = 0; x < this.canvas.width; x += size) {
-      for (let y = 0; y < this.canvas.height; y += size) {
-        this.context.strokeRect(x, y, size, size)
-        this.cells.push(new Cell(x, y, size, this))
+    const [width, height] = [this.canvas.width / Math.round(horizontal), this.canvas.height / Math.round(vertical)]
+    this.options = { cell: { width, height } }
+    for (let i = 0; i < horizontal; i++) {
+      for (let j = 0; j < vertical; j++) {
+        const [x, y] = [width * i, height * j]
+        this.cells.push(new Cell(x, y))
+        this.context.strokeRect(x, y, width, height)
       }
     }
   }
@@ -26,75 +34,15 @@ export class Painter {
     this.cells = []
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
-
-  /**
-   * @param {function} callback
-   */
-  onClick(callback) {
-    this.canvas.addEventListener('click', event => {
-      this.cells.forEach(cell => {
-        const [fromX, toX, fromY, toY] = [cell.x, cell.x + cell.size, cell.y, cell.y + cell.size]
-        if (event.offsetX >= fromX && event.offsetX <= toX && event.offsetY >= fromY && event.offsetY <= toY) {
-          callback(cell)
-        }
-      })
-    })
-  }
 }
 
 /**
  * @property {number} x
  * @property {number} y
- * @property {number} size
- * @property {Painter} painter
- * @property {boolean} isPaint
  */
 export class Cell {
-  isPaint = false
-
-  constructor(x, y, size, painter) {
+  constructor(x, y) {
     this.x = x
     this.y = y
-    this.size = size
-    this.painter = painter
-  }
-
-  paint() {
-    this.painter.context.fillRect(this.x, this.y, this.size, this.size)
-    this.isPaint = true
-  }
-
-  unpaint() {
-    this.painter.context.clearRect(this.x, this.y, this.size, this.size)
-    this.painter.context.strokeRect(this.x, this.y, this.size, this.size)
-    this.isPaint = false
-  }
-
-  getNeighbors() {
-    return this.painter.cells.reduce((neighbors, cell) => {
-      if (cell === this) {
-        return neighbors
-      }
-
-      if (
-        cell.x - this.x <= this.size &&
-        cell.x - this.x >= -this.size &&
-        cell.y - this.y <= this.size &&
-        cell.y - this.y >= -this.size
-      ) {
-        neighbors.push(cell)
-      }
-
-      return neighbors
-    }, [])
-  }
-
-  getPaintNeighbors() {
-    return this.getNeighbors().reduce((paintNeighbors, neighbor) => {
-      if (neighbor.isPaint) {
-        paintNeighbors.push(neighbor)
-      }
-      return paintNeighbors
-    }, [])
   }
 }
