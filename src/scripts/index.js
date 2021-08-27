@@ -64,9 +64,24 @@ addControl('#cell-size', {
   },
 })
 
+addControl('#interval-generation', {
+  init(control) {
+    control.value = localStorage.getItem('interval-generation') ?? 500
+  },
+  events: {
+    onInput(event) {
+      const interval = parseInt(event.target.value)
+      if (interval) {
+        localStorage.setItem('interval-generation', interval.toString())
+      }
+    },
+  },
+})
+
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', () => {
-  setInterval(startGame, 500)
+  const interval = localStorage.getItem('interval-generation') ?? 500
+  setInterval(startGame, interval)
 })
 
 /** Game */
