@@ -3,6 +3,10 @@ import { Cell, Painter } from './Painter'
 const painter = new Painter(document.querySelector('#canvas'))
 
 function startGame() {
+  window.generationCount = window.generationCount ?? 0
+  window.generationCount++
+  document.querySelector('.sidebar__item_generation-count').textContent = window.generationCount
+
   const cells = []
 
   painter.cells.forEach(cell => {
@@ -28,6 +32,23 @@ function startGame() {
       cell.unpaint()
     }
   })
+
+  endGame()
+}
+
+function endGame() {
+  const paintCells = painter.cells.reduce((paintCells, cell) => {
+    if (cell.isPaint) {
+      paintCells++
+    }
+    return paintCells
+  }, 0)
+
+  if (paintCells <= 0) {
+    window.generationCount = 0
+    clearInterval(window.gameVendor)
+    alert('Игра окончена')
+  }
 }
 
 function addControl(selector, options) {
@@ -81,7 +102,7 @@ addControl('#interval-generation', {
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', () => {
   const interval = localStorage.getItem('interval-generation') ?? 500
-  setInterval(startGame, interval)
+  window.gameVendor = setInterval(startGame, interval)
 })
 
 /** Game */
