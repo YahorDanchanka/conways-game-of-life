@@ -112,6 +112,25 @@ addControl('#generation-cells', {
   },
 })
 
+addControl('#stop-game', {
+  events: {
+    onClick() {
+      if (window.gameVendor) {
+        clearInterval(window.gameVendor)
+      }
+    },
+  },
+})
+
+addControl('#clear-game', {
+  events: {
+    onClick() {
+      const cellSize = localStorage.getItem('cell-size') ?? 50
+      painter.createGrid(+cellSize)
+    },
+  },
+})
+
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', () => {
   const interval = localStorage.getItem('interval-generation') ?? 500
