@@ -1,6 +1,6 @@
-import { Painter, Cell } from './Painter'
+import { Cell, Painter } from './Painter'
+
 const painter = new Painter(document.querySelector('#canvas'))
-painter.createGrid()
 
 function startGame() {
   const cells = []
@@ -30,13 +30,38 @@ function startGame() {
   })
 }
 
-/** Sidebar settings */
-const cellSizeInput = document.querySelector('#cell-size')
-cellSizeInput.addEventListener('input', () => {
-  const size = parseInt(cellSizeInput.value)
-  if (size) {
-    painter.createGrid(size)
+function addControl(selector, options) {
+  const control = document.querySelector(selector)
+
+  if (options.hasOwnProperty('init') && typeof options.init === 'function') {
+    options.init(control)
   }
+
+  if (options.hasOwnProperty('events') && typeof options.events === 'object') {
+    for (const event in options.events) {
+      if (options.events.hasOwnProperty(event)) {
+        if (typeof event !== 'string' || !event.includes('on')) break
+        let eventName = event.substr(2).toLowerCase()
+        control.addEventListener(eventName, options.events[event])
+      }
+    }
+  }
+}
+
+addControl('#cell-size', {
+  init(control) {
+    control.value = localStorage.getItem('cell-size') ?? 50
+    painter.createGrid(+control.value)
+  },
+  events: {
+    onInput(event) {
+      const cellSize = parseInt(event.target.value)
+      if (cellSize && cellSize >= 10) {
+        localStorage.setItem('cell-size', cellSize.toString())
+        painter.createGrid(cellSize)
+      }
+    },
+  },
 })
 
 const startGameButton = document.querySelector('#start-game')
