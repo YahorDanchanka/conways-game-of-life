@@ -34,6 +34,15 @@ verticalCountInput.value = game.painter.options.grid.vertical
 horizontalCountInput.addEventListener('input', redraw)
 verticalCountInput.addEventListener('input', redraw)
 
+const randomCellGenerationButton = document.querySelector('#random-cell-generation')
+randomCellGenerationButton.addEventListener('click', () => {
+  game.painter.cells.forEach(cell => {
+    if (Math.random() < 0.3) {
+      cell.paint()
+    }
+  })
+})
+
 game.addEventListener('run', () => {
   gameSpeedInput.removeAttribute('disabled')
   horizontalCountInput.setAttribute('disabled', 'disabled')
