@@ -37,6 +37,9 @@ export class Game extends EventTarget {
   }
 
   run = () => {
+    const isEmpty = this.painter.cells.every(cell => !cell.isPaint)
+    if (isEmpty) return
+
     this.dispatchEvent(new Event('run'))
     if (!this.process) {
       this.process = setInterval(this.generateGeneration, this.speed)
