@@ -29,6 +29,8 @@ function redraw() {
   }
 }
 
+horizontalCountInput.value = game.painter.options.grid.horizontal
+verticalCountInput.value = game.painter.options.grid.vertical
 horizontalCountInput.addEventListener('input', redraw)
 verticalCountInput.addEventListener('input', redraw)
 
