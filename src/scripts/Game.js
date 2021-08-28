@@ -1,14 +1,16 @@
 import { Cell, Painter } from './Painter'
-
 /**
  * @property {Painter} painter
  *
+ * @property speed Скорость генерации нового поколения
  * @property process Игровой цикл
  */
-export class Game {
+export class Game extends EventTarget {
+  speed = 500
   process = null
 
   constructor() {
+    super()
     this.painter = new Painter('#game')
     this.drawMap()
     this.painter.canvas.addEventListener('click', this.onPainterClick)
@@ -35,14 +37,16 @@ export class Game {
   }
 
   run = () => {
+    this.dispatchEvent(new Event('run'))
     if (!this.process) {
-      this.process = setInterval(this.generateGeneration, 500)
+      this.process = setInterval(this.generateGeneration, this.speed)
     } else {
       this.stop()
     }
   }
 
   stop() {
+    this.dispatchEvent(new Event('stop'))
     clearInterval(this.process)
     this.process = null
   }
@@ -69,5 +73,13 @@ export class Game {
       return generation
     }, [])
     this.painter.redraw()
+
+    const isEmpty = this.painter.cells.every(cell => !cell.isPaint)
+    if (isEmpty) {
+      const event = new Event('end')
+      event.message = 'На поле не осталось ни одной живой клетки'
+      this.dispatchEvent(event)
+      this.stop()
+    }
   }
 }
