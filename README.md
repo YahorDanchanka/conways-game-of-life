@@ -12,5 +12,5 @@ https://yahordanchanka.github.io/
 
 ## TODO
 - Поддержка Fullscreen API
-- Поддержка localstorage
+- ~~Поддержка localstorage~~ (c 2.1.0)
 - Поддержка реактивности объекта Painter
