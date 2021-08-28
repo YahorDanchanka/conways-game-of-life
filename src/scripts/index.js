@@ -22,14 +22,9 @@ game.addEventListener('run', () => {
   gameSpeedInput.removeAttribute('disabled')
 })
 
-game.addEventListener('stop', () => {
-  gameSpeedInput.setAttribute('disabled', 'disabled')
-})
-
-game.addEventListener('end', event => {
-  if (event.message) {
-    alert(event.message)
-    return
+game.addEventListener('stop', event => {
+  if (event.reason) {
+    alert(event.reason)
   }
-  alert('Игра закончена')
+  gameSpeedInput.setAttribute('disabled', 'disabled')
 })

@@ -45,8 +45,10 @@ export class Game extends EventTarget {
     }
   }
 
-  stop() {
-    this.dispatchEvent(new Event('stop'))
+  stop(reason = '') {
+    const event = new Event('stop')
+    event.reason = reason
+    this.dispatchEvent(event)
     clearInterval(this.process)
     this.process = null
   }
@@ -57,7 +59,7 @@ export class Game extends EventTarget {
   }
 
   generateGeneration = () => {
-    this.painter.cells = this.painter.cells.reduce((generation, cell) => {
+    const generation = this.painter.cells.reduce((generation, cell) => {
       const generateCell = new Cell(cell.x, cell.y, this.painter)
       const paintNeighborsCount = cell.getPaintNeighbors().length
 
@@ -72,14 +74,18 @@ export class Game extends EventTarget {
       generation.push(generateCell)
       return generation
     }, [])
+
+    const isLoop = generation.every((cell, i) => cell.isPaint === this.painter.cells[i].isPaint)
+    if (isLoop) {
+      this.stop('Ни одна из клеток не меняет своего состояния')
+    }
+
+    this.painter.cells = generation
     this.painter.redraw()
 
     const isEmpty = this.painter.cells.every(cell => !cell.isPaint)
     if (isEmpty) {
-      const event = new Event('end')
-      event.message = 'На поле не осталось ни одной живой клетки'
-      this.dispatchEvent(event)
-      this.stop()
+      this.stop('На поле не осталось ни одной живой клетки')
     }
   }
 }
