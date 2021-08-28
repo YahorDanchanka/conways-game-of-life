@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Документ</title>
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
   <style>
     canvas {
       display: block;
@@ -19,6 +20,15 @@
     <div class="columns">
       <div class="column col-12">
         <canvas id="game" width="800" height="400">Ваш браузер устарел. Сайт может работать неправильно.</canvas>
+      </div>
+  </div>
+  <div class="container grid-lg">
+    <div class="columns">
+      <div class="column col-12">
+        <div class="btn-group btn-group-block">
+          <button id="start-game" class="btn btn-primary btn-action" title="Запустить / Остановить"><i class="icon icon-shutdown"></i></button>
+          <button id="refresh-game-button" class="btn btn-primary btn-action" title="Перезагрузить"><i class="icon icon-refresh"></i></button>
+        </div>
       </div>
     </div>
   </div>

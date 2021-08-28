@@ -30,6 +30,16 @@ export class Painter {
     }
   }
 
+  redraw() {
+    this.cells.forEach(cell => {
+      if (cell.isPaint) {
+        cell.paint()
+      } else {
+        cell.unpaint()
+      }
+    })
+  }
+
   clearGrid() {
     this.cells = []
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -57,6 +67,12 @@ export class Cell {
     this.painter.context.fillRect(this.x, this.y, this.painter.options.cell.width, this.painter.options.cell.height)
   }
 
+  unpaint() {
+    this.isPaint = false
+    this.painter.context.clearRect(this.x, this.y, this.painter.options.cell.width, this.painter.options.cell.height)
+    this.painter.context.strokeRect(this.x, this.y, this.painter.options.cell.width, this.painter.options.cell.height)
+  }
+
   getNeighbors() {
     return this.painter.cells.reduce((neighbors, cell) => {
       if (cell === this) {
@@ -73,6 +89,15 @@ export class Cell {
       }
 
       return neighbors
+    }, [])
+  }
+
+  getPaintNeighbors() {
+    return this.getNeighbors().reduce((paintNeighbors, neighbor) => {
+      if (neighbor.isPaint) {
+        paintNeighbors.push(neighbor)
+      }
+      return paintNeighbors
     }, [])
   }
 }
