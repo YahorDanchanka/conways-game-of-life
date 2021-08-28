@@ -6,7 +6,7 @@
  */
 export class Painter {
   cells = []
-  options = {}
+  options = { grid: { horizontal: 30, vertical: 15 } }
 
   constructor(selector) {
     this.canvas = document.querySelector(selector)
@@ -20,7 +20,7 @@ export class Painter {
   createGrid(horizontal, vertical) {
     this.clearGrid()
     const [width, height] = [this.canvas.width / Math.round(horizontal), this.canvas.height / Math.round(vertical)]
-    this.options = { cell: { width, height } }
+    this.options = { cell: { width, height }, grid: { horizontal, vertical } }
     for (let i = 0; i < horizontal; i++) {
       for (let j = 0; j < vertical; j++) {
         const [x, y] = [width * i, height * j]

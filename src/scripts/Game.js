@@ -17,7 +17,7 @@ export class Game extends EventTarget {
   }
 
   drawMap() {
-    this.painter.createGrid(30, 15)
+    this.painter.createGrid(this.painter.options.grid.horizontal, this.painter.options.grid.vertical)
   }
 
   onPainterClick = event => {

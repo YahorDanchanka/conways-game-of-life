@@ -18,8 +18,24 @@ gameSpeedInput.addEventListener('input', () => {
   }
 })
 
+const horizontalCountInput = document.querySelector('#horizontal-count')
+const verticalCountInput = document.querySelector('#vertical-count')
+
+function redraw() {
+  if (parseInt(horizontalCountInput.value) && parseInt(verticalCountInput.value)) {
+    game.painter.options.grid.horizontal = horizontalCountInput.value
+    game.painter.options.grid.vertical = verticalCountInput.value
+    game.drawMap()
+  }
+}
+
+horizontalCountInput.addEventListener('input', redraw)
+verticalCountInput.addEventListener('input', redraw)
+
 game.addEventListener('run', () => {
   gameSpeedInput.removeAttribute('disabled')
+  horizontalCountInput.setAttribute('disabled', 'disabled')
+  verticalCountInput.setAttribute('disabled', 'disabled')
 })
 
 game.addEventListener('stop', event => {
@@ -27,4 +43,6 @@ game.addEventListener('stop', event => {
     alert(event.reason)
   }
   gameSpeedInput.setAttribute('disabled', 'disabled')
+  horizontalCountInput.removeAttribute('disabled')
+  verticalCountInput.removeAttribute('disabled')
 })
