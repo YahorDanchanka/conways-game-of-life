@@ -11,6 +11,6 @@ https://yahordanchanka.github.io/
 - Поддержка событий игры
 
 ## TODO
-- Поддержка Fullscreen API
+- ~~Поддержка Fullscreen API~~ (c 2.2.0)
 - ~~Поддержка localstorage~~ (c 2.1.0)
 - Поддержка реактивности объекта Painter
