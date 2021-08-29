@@ -9,9 +9,9 @@ export class Game extends EventTarget {
   speed = 500
   process = null
 
-  constructor() {
+  constructor(canvas) {
     super()
-    this.painter = new Painter('#game')
+    this.painter = new Painter(canvas)
     this.drawMap()
     this.painter.canvas.addEventListener('click', this.onPainterClick)
   }

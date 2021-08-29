@@ -8,8 +8,11 @@ export class Painter {
   cells = []
   options = { grid: { horizontal: 30, vertical: 15 } }
 
-  constructor(selector) {
-    this.canvas = document.querySelector(selector)
+  constructor(canvas) {
+    if (!(canvas instanceof HTMLCanvasElement)) {
+      throw new Error('The received element is not a canvas')
+    }
+    this.canvas = canvas
     this.context = this.canvas.getContext('2d')
   }
 

@@ -1,5 +1,7 @@
 import { Game } from './Game'
-const game = new Game()
+
+const canvas = document.querySelector('#game')
+const game = new Game(canvas)
 
 document.addEventListener('keydown', event => {
   if (event.code === 'Space') {
