@@ -13,6 +13,9 @@
     canvas:hover {
       cursor: pointer;
     }
+    canvas:fullscreen {
+      background-color: white;
+    }
   </style>
 </head>
 <body>
@@ -31,11 +34,22 @@
           <button id="refresh-game-button" class="btn btn-primary btn-action" title="Перезагрузить"><i class="icon icon-refresh"></i></button>
         </div>
         <div class="input-group" style="width: 300px; margin: 0 auto">
+          <button id="fullscreen" class="btn btn-primary btn-action" title="На весь экран"><i class="icon icon-resize-vert"></i></button>
           <input id="horizontal-count" class="form-input" type="number" min="1" max="75" value="30">
           <span class="input-group-addon">-</span>
           <input id="vertical-count" class="form-input" type="number" min="1" max="75" value="15">
           <button id="random-cell-generation" class="btn btn-primary btn-action" title="Генерация клеток"><i class="icon icon-apps"></i></button>
         </div>
+      </div>
+      <div class="column col-12">
+        Быстрые клавиши
+        <ul>
+          <li><strong>Пробел</strong> - Пуск / Пауза</li>
+          <li><strong>К (R)</strong> - Очистить поле</li>
+          <li><strong>П (G)</strong> - Генерация рандомных клеток</li>
+          <li><strong>Стрелка вверх</strong> - Плюс 100 к скорости генерации поколения</li>
+          <li><strong>Стрелка вниз</strong> - Минус 100 к скорости генерации поколения</li>
+        </ul>
       </div>
     </div>
   </div>

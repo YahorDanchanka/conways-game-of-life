@@ -1,6 +1,26 @@
 import { Game } from './Game'
 const game = new Game()
 
+document.addEventListener('keydown', event => {
+  if (event.code === 'Space') {
+    game.run()
+  } else if (event.code === 'KeyR') {
+    game.clear()
+  } else if (event.code === 'KeyG') {
+    randomCellGenerationButton.click()
+  } else if (event.code === 'ArrowUp') {
+    if (+gameSpeedInput.value) {
+      gameSpeedInput.value = +gameSpeedInput.value + 100
+      gameSpeedInput.dispatchEvent(new Event('input'))
+    }
+  } else if (event.code === 'ArrowDown') {
+    if (+gameSpeedInput.value && +gameSpeedInput.value > 100) {
+      gameSpeedInput.value = +gameSpeedInput.value - 100
+      gameSpeedInput.dispatchEvent(new Event('input'))
+    }
+  }
+})
+
 const startGameButton = document.querySelector('#start-game')
 startGameButton.addEventListener('click', game.run)
 
@@ -47,6 +67,22 @@ randomCellGenerationButton.addEventListener('click', () => {
       cell.paint()
     }
   })
+})
+
+const fullscreenButton = document.querySelector('#fullscreen')
+fullscreenButton.addEventListener('click', () => {
+  game.painter.canvas.requestFullscreen()
+})
+game.painter.canvas.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    game.painter.canvas.width = window.screen.width
+    game.painter.canvas.height = window.screen.height
+    alert('Используйте быстрые клавиши для управления')
+  } else {
+    game.painter.canvas.width = 800
+    game.painter.canvas.height = 400
+  }
+  game.drawMap()
 })
 
 game.addEventListener('run', () => {
