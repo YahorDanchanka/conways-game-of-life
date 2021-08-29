@@ -14,3 +14,4 @@ https://yahordanchanka.github.io/
 - ~~Поддержка Fullscreen API~~ (c 2.2.0)
 - ~~Поддержка localstorage~~ (c 2.1.0)
 - Поддержка реактивности объекта Painter
+- Покрыть классы тестами
